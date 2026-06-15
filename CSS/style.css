@@ -1,0 +1,1689 @@
+/* 
+   ==========================================================================
+   ESTILO COMPLETO E ANIMADO - LANDING PAGE DR. FELIPPE CORRÊA
+   ==========================================================================
+   Este arquivo contém o Design System, Layout e todas as novas diretrizes:
+   1. Textos justificados nas áreas de conteúdo.
+   2. Animações premium nos botões (Efeito Shimmer/Brilho, Pulsar e Escala).
+   3. Animações de Scroll Reveal (revelação de elementos na rolagem da página).
+   4. Micro-transições e efeitos hover refinados.
+*/
+
+/* Importação das fontes do Google Fonts: Playfair Display (títulos) e Inter (textos) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+
+/* Variáveis de cores e configurações do design system */
+:root {
+    /* Paleta Principal Sóbria e Corporativa */
+    --bg-primary: #0b0c0d;         /* Preto institucional profundo */
+    --bg-secondary: #121417;       /* Cinza chumbo escuro */
+    --bg-card: #181b1f;            /* Grafite escuro para blocos de conteúdo */
+    --accent-gold: #c3a375;        /* Dourado envelhecido institucional */
+    --accent-gold-hover: #d9ba8e;  /* Dourado mais claro para destaques e hover */
+    --accent-chumbo: #2e333a;      /* Cinza chumbo intermediário para divisores */
+    
+    /* Tipografia e Leitura */
+    --text-primary: #f5f6f8;       /* Off-white com excelente legibilidade */
+    --text-secondary: #a0a5b0;     /* Cinza médio para apoio e descrição */
+    --text-muted: #6c727f;         /* Cinza discreto para termos técnicos/OAB */
+    
+    /* Configurações de Transição e Layout */
+    --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-fast: all 0.2s ease-out;
+    --border-radius-sm: 4px;
+    --border-radius-md: 8px;
+    --border-radius-lg: 16px;
+    --max-width: 1200px;
+    --header-height: 80px;
+}
+
+/* Reset CSS de margens e preenchimentos para consistência do navegador */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+}
+
+/* Comportamento geral da página e rolagem suave */
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+/* Estilo do corpo do site, aplicando tipografia padrão e cores do tema */
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.7;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Customização fina da barra de rolagem (scrollbar) no estilo escuro */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--accent-chumbo);
+    border-radius: var(--border-radius-sm);
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-gold);
+}
+
+/* Estilização para tags de títulos (H1, H2, H3, H4) com Playfair Display */
+h1, h2, h3, h4 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+    color: var(--text-primary);
+    line-height: 1.25;
+}
+
+/* Reset de links e botões */
+a {
+    color: inherit;
+    text-decoration: none;
+    transition: var(--transition-smooth);
+}
+
+button {
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    border: none;
+    background: none;
+    transition: var(--transition-smooth);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Classes utilitárias reutilizáveis em todo o layout */
+.container {
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.section-padding {
+    padding: 7rem 0;
+}
+
+.text-gold {
+    color: var(--accent-gold);
+}
+
+/* ==========================================================================
+   DIRETRIZES DE REVELAÇÃO E ANIMAÇÃO DE ELEMENTOS (SCROLL REVEAL)
+   ========================================================================== */
+
+/* Animação: Deslizar de baixo para cima (padrão) */
+.reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), 
+                transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Animação: Deslizar da esquerda para a direita */
+.reveal-left {
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), 
+                transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Animação: Deslizar da direita para a esquerda */
+.reveal-right {
+    opacity: 0;
+    transform: translateX(50px);
+    transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), 
+                transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Animação: Escalonamento suave (Zoom-in) */
+.reveal-scale {
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), 
+                transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Estado ativo que ativa a animação de revelação */
+.reveal.active,
+.reveal-left.active,
+.reveal-right.active,
+.reveal-scale.active {
+    opacity: 1;
+    transform: translateY(0) translateX(0) scale(1);
+}
+
+/* Delays para animação sequencial em listas e grids */
+.delay-1 { transition-delay: 0.1s; }
+.delay-2 { transition-delay: 0.2s; }
+.delay-3 { transition-delay: 0.3s; }
+.delay-4 { transition-delay: 0.4s; }
+.delay-5 { transition-delay: 0.5s; }
+
+/* Animação inicial estática simples para Hero ao carregar o site */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeInUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ==========================================================================
+   ESTILIZAÇÃO E ANIMAÇÃO DOS BOTÕES
+   ========================================================================== */
+
+/* Base estrutural dos botões */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.85rem 1.85rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: var(--border-radius-sm);
+    letter-spacing: 0.5px;
+    gap: 0.6rem;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    transition: var(--transition-smooth);
+}
+
+/* 
+   Efeito Shimmer (brilho reflexivo metálico que passa pelo botão).
+   Adicionado a todos os botões principais para destacar as chamadas de ação.
+*/
+.btn-shimmer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.35) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    transform: skewX(-25deg);
+    transition: left 0.75s ease-in-out;
+    z-index: -1;
+}
+
+.btn-shimmer:hover::before {
+    left: 150%;
+    transition: 0.75s ease-in-out;
+}
+
+/* Botão Primário - Dourado Envelhecido Sólido com Shimmer */
+.btn-primary {
+    background-color: var(--accent-gold);
+    color: #0b0c0d; /* Garante alto contraste e perfeita leitura */
+    border: 1px solid var(--accent-gold);
+}
+
+.btn-primary:hover {
+    background-color: var(--accent-gold-hover);
+    border-color: var(--accent-gold-hover);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(195, 163, 117, 0.35);
+}
+
+/* Botão Secundário - Vazado com Borda e Efeito de Preenchimento */
+.btn-secondary {
+    background-color: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--accent-chumbo);
+}
+
+.btn-secondary::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(195, 163, 117, 0.08);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: -1;
+}
+
+.btn-secondary:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+.btn-secondary:hover {
+    border-color: var(--accent-gold);
+    color: var(--accent-gold);
+    transform: translateY(-3px);
+}
+
+/* Botão do Menu Superior - Discreto com Borda Fina Dourada */
+.btn-menu {
+    background-color: transparent;
+    color: var(--accent-gold);
+    border: 1px solid rgba(195, 163, 117, 0.4);
+    padding: 0.55rem 1.3rem;
+    font-size: 0.85rem;
+}
+
+.btn-menu:hover {
+    background-color: var(--accent-gold);
+    color: #0b0c0d;
+    border-color: var(--accent-gold);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(195, 163, 117, 0.15);
+}
+
+/* Botão de WhatsApp Específico para Conversão (Verde) com Shimmer */
+.btn-whatsapp-green {
+    background-color: #25d366;
+    border: 1px solid #25d366;
+    color: #ffffff;
+}
+
+.btn-whatsapp-green:hover {
+    background-color: #20ba56;
+    border-color: #20ba56;
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
+}
+
+/* Botões Largos de Seção */
+.btn-large {
+    padding: 1.15rem 2.3rem;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+/* Ícone de Seta dentro do botão */
+.btn-icon {
+    width: 18px;
+    height: 18px;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn:hover .btn-icon {
+    transform: translateX(4px);
+}
+
+/* Animação de Pulsar Suave para chamar atenção na Hero */
+@keyframes btnPulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(195, 163, 117, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 15px rgba(195, 163, 117, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(195, 163, 117, 0);
+    }
+}
+
+.btn-pulse {
+    animation: btnPulse 2.5s infinite;
+}
+
+/* ==========================================================================
+   ESTRUTURA DE TÍTULOS E BADGES
+   ========================================================================== */
+
+/* Badge superior de especialidade */
+.badge-tag {
+    display: inline-block;
+    background-color: rgba(195, 163, 117, 0.08);
+    color: var(--accent-gold);
+    border: 1px solid rgba(195, 163, 117, 0.25);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    padding: 0.45rem 1.1rem;
+    border-radius: var(--border-radius-sm);
+    margin-bottom: 1.7rem;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05);
+}
+
+/* Título e legenda padrão de seções */
+.section-header {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 4.5rem auto;
+}
+
+.section-subtitle {
+    display: block;
+    color: var(--accent-gold);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 3.5px;
+    text-transform: uppercase;
+    margin-bottom: 0.85rem;
+}
+
+.section-title {
+    font-size: 2.3rem;
+    margin-bottom: 1.25rem;
+    letter-spacing: -0.5px;
+}
+
+.header-line {
+    width: 60px;
+    height: 2px;
+    background-color: var(--accent-gold);
+    margin: 0 auto 1.5rem auto;
+    box-shadow: 0 1px 2px rgba(195, 163, 117, 0.3);
+}
+
+.header-line-left {
+    margin: 0 0 1.5rem 0;
+}
+
+.section-description {
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+}
+
+/* ==========================================================================
+   1. HEADER / CABEÇALHO FIXO
+   ========================================================================== */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--header-height);
+    background-color: rgba(11, 12, 13, 0.8); /* Translúcido e minimalista */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+    z-index: 1000;
+    transition: var(--transition-smooth);
+}
+
+/* Modificação dinâmica do cabeçalho ao rolar (JS) */
+.header-scrolled {
+    background-color: rgba(11, 12, 13, 0.97);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    border-bottom-color: rgba(195, 163, 117, 0.12);
+    height: 70px;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+}
+
+/* Logotipo em imagem institucional */
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo-img {
+    height: 40px; /* Altura equilibrada para caber no cabeçalho fixo */
+    width: auto;
+    display: block;
+    transition: var(--transition-smooth);
+}
+
+.logo:hover .logo-img {
+    transform: scale(1.02); /* Efeito sutil de zoom no hover */
+    filter: brightness(1.05);
+}
+
+.footer-logo-img {
+    height: 46px; /* Tamanho ligeiramente maior no Rodapé */
+    width: auto;
+    margin-bottom: 1rem;
+    transition: var(--transition-smooth);
+}
+
+/* Menu de navegação */
+.nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.nav-link {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    letter-spacing: 0.5px;
+    position: relative;
+    padding: 0.5rem 0;
+}
+
+.nav-link:hover {
+    color: var(--text-primary);
+}
+
+/* Sublinhado animado nos links do cabeçalho */
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1.5px;
+    background-color: var(--accent-gold);
+    transition: var(--transition-smooth);
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+/* Hambúrguer Mobile */
+.nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 24px;
+    height: 18px;
+    z-index: 1001;
+}
+
+.nav-toggle .bar {
+    width: 100%;
+    height: 2px;
+    background-color: var(--text-primary);
+    transition: var(--transition-smooth);
+}
+
+/* ==========================================================================
+   2. SEÇÃO HERO
+   ========================================================================== */
+.hero-section {
+    position: relative;
+    padding-top: calc(var(--header-height) + 5rem);
+    padding-bottom: 7.5rem;
+    min-height: 95vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    /* Definição de imagem de fundo com overlay sutil no HTML */
+    background-image: url('../img/Hero.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: var(--bg-primary);
+}
+
+/* Gradiente radial de fundo para dar elegância e profundidade tridimensional */
+.hero-bg-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 75% 35%, rgba(46, 51, 58, 0.1) 0%, rgba(11, 12, 13, 0.4) 60%, rgba(11, 12, 13, 1) 100%);
+    z-index: 1;
+}
+
+.hero-container {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.hero-content {
+    max-width: 690px;
+}
+
+.hero-title {
+    font-size: 3.4rem;
+    line-height: 1.15;
+    margin-bottom: 2rem;
+    letter-spacing: -0.5px;
+}
+
+/* [REGRA APLICADA] Textos destacados da Hero justificados */
+.hero-text-highlight {
+    font-size: 1.2rem;
+    color: var(--text-primary);
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    border-left: 2px solid var(--accent-gold);
+    padding-left: 1.2rem;
+    text-align: justify; /* Justificado */
+}
+
+/* [REGRA APLICADA] Texto descritivo da Hero justificado */
+.hero-text-description {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin-bottom: 2.8rem;
+    padding-left: 1.35rem;
+    text-align: justify; /* Justificado */
+}
+
+.hero-actions {
+    display: flex;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+    padding-left: 1.35rem;
+}
+
+/* Elemento de dados estatísticos flutuantes na lateral direita */
+.hero-visual {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.hero-card-info {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--accent-chumbo);
+    border-left: 3px solid var(--accent-gold);
+    border-radius: var(--border-radius-md);
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.7);
+    transition: var(--transition-smooth);
+}
+
+.hero-card-info:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 25px 50px rgba(195, 163, 117, 0.08);
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.info-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem;
+    font-weight: 600;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+}
+
+.info-label {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.45;
+}
+
+.info-divider {
+    height: 1px;
+    background-color: var(--accent-chumbo);
+    opacity: 0.4;
+}
+
+/* ==========================================================================
+   3. SEÇÃO SERVIÇOS (ATUAÇÃO)
+   ========================================================================== */
+.services-section {
+    background-color: var(--bg-secondary);
+    position: relative;
+    border-top: 1px solid rgba(255, 255, 255, 0.01);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.01);
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+}
+
+.service-card {
+    background-color: var(--bg-primary);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    padding: 2.8rem 2.2rem;
+    border-radius: var(--border-radius-md);
+    transition: var(--transition-smooth);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Hover avançado do card de serviço com borda brilhosa suave */
+.service-card:hover {
+    transform: translateY(-8px);
+    background-color: var(--bg-card);
+    border-color: rgba(195, 163, 117, 0.35);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+}
+
+.service-icon-wrapper {
+    color: var(--accent-gold);
+    margin-bottom: 1.8rem;
+    transition: var(--transition-smooth);
+}
+
+/* Efeito de rotação/pulsação sutil no ícone ao passar o mouse */
+.service-card:hover .service-icon-wrapper {
+    transform: scale(1.1);
+    color: var(--accent-gold-hover);
+}
+
+.service-icon {
+    width: 38px;
+    height: 38px;
+}
+
+.service-card-title {
+    font-size: 1.35rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
+    letter-spacing: -0.25px;
+}
+
+/* [REGRA APLICADA] Descrição dos cartões de serviço justificada */
+.service-card-text {
+    color: var(--text-secondary);
+    font-size: 0.92rem;
+    line-height: 1.65;
+    text-align: justify; /* Justificado */
+}
+
+/* ==========================================================================
+   4. BLOCO DE CENÁRIOS
+   ========================================================================== */
+.scenarios-section {
+    background-color: var(--bg-primary);
+}
+
+.scenarios-layout {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 4.5rem;
+    align-items: flex-start;
+}
+
+/* Mantém o título fixado na lateral esquerda durante a rolagem no desktop */
+.scenarios-intro {
+    position: sticky;
+    top: 120px;
+}
+
+.scenarios-title {
+    font-size: 2.2rem;
+    margin-top: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+/* [REGRA APLICADA] Texto introdutório dos cenários justificado */
+.scenarios-intro-text {
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    margin-bottom: 2rem;
+    text-align: justify; /* Justificado */
+}
+
+/* Bloco decorativo */
+.scenarios-accent-box {
+    border-left: 2px solid var(--accent-gold);
+    padding: 1rem 1.5rem;
+    background-color: rgba(195, 163, 117, 0.02);
+}
+
+.accent-box-text {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    color: var(--accent-gold);
+    font-size: 1rem;
+    line-height: 1.55;
+}
+
+/* Lista de cenários */
+.scenarios-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.scenario-item {
+    display: flex;
+    gap: 1.25rem;
+    background-color: var(--bg-secondary);
+    border: 1px solid rgba(255, 255, 255, 0.02);
+    padding: 1.6rem;
+    border-radius: var(--border-radius-md);
+    transition: var(--transition-smooth);
+}
+
+.scenario-item:hover {
+    border-color: rgba(195, 163, 117, 0.22);
+    background-color: var(--bg-card);
+    transform: translateX(5px); /* Efeito de deslocamento elegante para o lado */
+}
+
+.scenario-check {
+    width: 24px;
+    height: 24px;
+    background-color: rgba(195, 163, 117, 0.08);
+    border: 1px solid rgba(195, 163, 117, 0.25);
+    color: var(--accent-gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+    transition: var(--transition-smooth);
+}
+
+.scenario-item:hover .scenario-check {
+    background-color: var(--accent-gold);
+    color: #0b0c0d;
+}
+
+.scenario-check svg {
+    width: 12px;
+    height: 12px;
+}
+
+.scenario-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.scenario-item-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* [REGRA APLICADA] Descrição de cenários justificada */
+.scenario-item-desc {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    text-align: justify; /* Justificado */
+}
+
+/* ==========================================================================
+   5. SEÇÃO SOBRE O ADVOGADO
+   ========================================================================== */
+.about-section {
+    background-color: var(--bg-secondary);
+    border-top: 1px solid rgba(255, 255, 255, 0.01);
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 4.5rem;
+    align-items: center;
+}
+
+.about-image-wrapper {
+    position: relative;
+}
+
+.about-image-frame {
+    position: relative;
+    border: 1px solid var(--accent-chumbo);
+    padding: 1rem;
+    border-radius: var(--border-radius-md);
+    background-color: var(--bg-primary);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    /* Removido overflow: hidden para permitir que a OAB flutuante seja exibida inteira */
+}
+
+/* Borda decorativa dourada */
+.about-image-frame::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: 40px;
+    height: 40px;
+    border-top: 2px solid var(--accent-gold);
+    border-left: 2px solid var(--accent-gold);
+}
+
+/* Container interno com overflow oculto para confinar o efeito de escala na imagem */
+.about-image-inner {
+    overflow: hidden;
+    border-radius: calc(var(--border-radius-md) - 4px);
+    width: 100%;
+    display: block;
+}
+
+.about-image {
+    width: 100%;
+    filter: grayscale(12%) contrast(104%);
+    transition: var(--transition-smooth);
+}
+
+/* Escala interna sutil no hover sobre o frame da foto */
+.about-image-frame:hover .about-image {
+    transform: scale(1.05);
+    filter: grayscale(0%) contrast(100%);
+}
+
+/* Emblema flutuante de OAB - white-space: nowrap garante exibição completa em uma linha */
+.oab-floating-badge {
+    position: absolute;
+    bottom: -1.5rem;
+    right: 2rem;
+    background-color: var(--bg-card);
+    border: 1px solid var(--accent-gold);
+    border-radius: var(--border-radius-sm);
+    padding: 0.65rem 1.25rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    white-space: nowrap; /* Impede a quebra de linha do texto da OAB */
+    z-index: 10;
+}
+
+.badge-title {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-secondary);
+}
+
+.badge-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--accent-gold);
+    margin-top: 2px;
+}
+
+/* Informações biográficas */
+.about-info {
+    max-width: 600px;
+}
+
+.about-title {
+    font-size: 2.2rem;
+    margin-bottom: 1.2rem;
+}
+
+/* [REGRA APLICADA] Texto de introdução biográfica justificado */
+.about-text-lead {
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 1.25rem;
+    text-align: justify; /* Justificado */
+}
+
+/* [REGRA APLICADA] Parágrafos sobre o advogado justificados */
+.about-text-paragraph {
+    color: var(--text-secondary);
+    margin-bottom: 1.3rem;
+    font-size: 0.95rem;
+    text-align: justify; /* Justificado */
+}
+
+.about-text-paragraph:last-of-type {
+    margin-bottom: 2rem;
+}
+
+/* Badges informativos rápidos */
+.about-badges {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.about-badges .badge-item {
+    background-color: var(--bg-primary);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    border-radius: var(--border-radius-sm);
+    padding: 0.8rem 1.2rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 180px;
+    transition: var(--transition-smooth);
+}
+
+.about-badges .badge-item:hover {
+    border-color: rgba(195, 163, 117, 0.2);
+    transform: translateY(-2px);
+}
+
+.badge-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+}
+
+.badge-desc {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-top: 3px;
+}
+
+/* ==========================================================================
+   6. SEÇÃO DIFERENCIAIS
+   ========================================================================== */
+.advantages-section {
+    background-color: var(--bg-primary);
+}
+
+.advantages-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+}
+
+.advantage-card {
+    background-color: var(--bg-secondary);
+    border: 1px solid rgba(255, 255, 255, 0.02);
+    border-top: 2px solid var(--accent-chumbo);
+    padding: 2.8rem 2.2rem;
+    border-radius: var(--border-radius-md);
+    transition: var(--transition-smooth);
+}
+
+/* Hover elegante com borda dourada acendendo */
+.advantage-card:hover {
+    border-top-color: var(--accent-gold);
+    transform: translateY(-6px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    background-color: var(--bg-card);
+}
+
+.advantage-icon {
+    width: 44px;
+    height: 44px;
+    color: var(--accent-gold);
+    margin-bottom: 1.5rem;
+    transition: var(--transition-smooth);
+}
+
+.advantage-card:hover .advantage-icon {
+    transform: translateY(-2px);
+    color: var(--accent-gold-hover);
+}
+
+.advantage-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 0.85rem;
+    letter-spacing: -0.25px;
+}
+
+/* [REGRA APLICADA] Descrição de diferenciais justificada */
+.advantage-desc {
+    color: var(--text-secondary);
+    font-size: 0.88rem;
+    line-height: 1.65;
+    text-align: justify; /* Justificado */
+}
+
+/* ==========================================================================
+   7. SEÇÃO CTA WHATSAPP
+   ========================================================================== */
+.cta-section {
+    background-color: var(--bg-secondary);
+    position: relative;
+    border-top: 1px solid rgba(255, 255, 255, 0.01);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.01);
+}
+
+.cta-box {
+    background: linear-gradient(135deg, #16191c 0%, #0d0f11 100%);
+    border: 1px solid var(--accent-chumbo);
+    border-top: 3px solid var(--accent-gold);
+    border-radius: var(--border-radius-lg);
+    padding: 4.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7);
+}
+
+/* Círculos sutis e elegantes de luz de fundo */
+.cta-box::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(195, 163, 117, 0.02) 0%, rgba(0, 0, 0, 0) 60%);
+    z-index: 1;
+}
+
+.cta-content {
+    position: relative;
+    z-index: 2;
+    max-width: 780px;
+    margin: 0 auto;
+}
+
+.cta-tag {
+    display: inline-block;
+    color: var(--accent-gold);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 3.5px;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+}
+
+.cta-title {
+    font-size: 2.6rem;
+    margin-bottom: 1.5rem;
+}
+
+/* [REGRA APLICADA] Descrição de texto do CTA justificado */
+.cta-text {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    margin-bottom: 3rem;
+    line-height: 1.7;
+    text-align: justify; /* Justificado */
+}
+
+/* ==========================================================================
+   8. SEÇÃO FAQ (PERGUNTAS FREQUENTES)
+   ========================================================================== */
+.faq-section {
+    background-color: var(--bg-primary);
+}
+
+.faq-list {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.faq-item {
+    background-color: var(--bg-secondary);
+    border: 1px solid rgba(255, 255, 255, 0.02);
+    border-radius: var(--border-radius-md);
+    overflow: hidden;
+    transition: var(--transition-smooth);
+}
+
+/* Pergunta */
+.faq-question {
+    width: 100%;
+    padding: 1.85rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    color: var(--text-primary);
+    font-size: 1.05rem;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+}
+
+.faq-question:hover {
+    color: var(--accent-gold);
+    background-color: rgba(255, 255, 255, 0.01);
+}
+
+.faq-arrow {
+    width: 18px;
+    height: 18px;
+    color: var(--text-muted);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s;
+    flex-shrink: 0;
+}
+
+/* Resposta */
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* [REGRA APLICADA] Resposta do FAQ com texto justificado */
+.faq-answer-text {
+    padding: 0 2rem 1.85rem 2rem;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    border-top: 1px solid rgba(255, 255, 255, 0.01);
+    text-align: justify; /* Justificado */
+}
+
+/* Estado de abertura do acordeão via JS (faq-open evita conflito com reveal active) */
+.faq-item.faq-open {
+    border-color: rgba(195, 163, 117, 0.28);
+    background-color: var(--bg-card);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.faq-item.faq-open .faq-arrow {
+    transform: rotate(180deg);
+    color: var(--accent-gold);
+}
+
+.faq-item.faq-open .faq-question {
+    color: var(--accent-gold);
+}
+
+/* ==========================================================================
+   9. FOOTER / RODAPÉ (DADOS FIXOS)
+   ========================================================================== */
+.footer {
+    background-color: #070809;
+    border-top: 1px solid var(--accent-chumbo);
+    padding: 5.5rem 0 2rem 0;
+}
+
+.footer-container {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr 1.15fr 0.85fr;
+    gap: 3rem;
+    margin-bottom: 4rem;
+}
+
+.footer-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-logo {
+    margin-bottom: 1.5rem;
+}
+
+/* [REGRA APLICADA] Resumo do footer justificado */
+.footer-about-text {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    line-height: 1.65;
+    margin-bottom: 1.5rem;
+    text-align: justify; /* Justificado */
+}
+
+.footer-oab {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    border-left: 2px solid var(--accent-gold);
+    padding-left: 0.8rem;
+    line-height: 1.55;
+}
+
+.footer-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-primary);
+    margin-bottom: 1.85rem;
+    position: relative;
+}
+
+.footer-title::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 25px;
+    height: 1.5px;
+    background-color: var(--accent-gold);
+}
+
+.footer-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.footer-links a {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+
+.footer-links a:hover {
+    color: var(--accent-gold);
+    transform: translateX(4px);
+}
+
+.footer-address-list,
+.footer-contact-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.footer-address-list li,
+.footer-contact-list li {
+    display: flex;
+    gap: 0.85rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.footer-icon {
+    width: 16px;
+    height: 16px;
+    color: var(--accent-gold);
+    flex-shrink: 0;
+    margin-top: 3px;
+    transition: var(--transition-smooth);
+}
+
+.footer-contact-list li:hover .footer-icon {
+    transform: scale(1.15);
+}
+
+.footer-contact-link:hover {
+    color: var(--accent-gold);
+}
+
+/* Linha final */
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.02);
+    padding-top: 2rem;
+}
+
+.footer-bottom-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+}
+
+.footer-bottom-links {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.footer-bottom-links a {
+    color: var(--text-muted);
+}
+
+.footer-bottom-links a:hover {
+    color: var(--accent-gold);
+}
+
+/* ==========================================================================
+   10. BOTÃO DE WHATSAPP FLUTUANTE EXTRA COM MINI BALÃO DE CONVERSA
+   ========================================================================== */
+.whatsapp-badge-wrapper {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+/* 
+   Animação Pulsar para o botão do WhatsApp.
+   Cria anéis sutis e elegantes que irradiam do botão para chamar atenção discreta.
+*/
+@keyframes whatsappPulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.5);
+    }
+    70% {
+        box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+    }
+}
+
+/* Botão principal */
+.whatsapp-float-btn {
+    width: 60px;
+    height: 60px;
+    background-color: #25d366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    box-shadow: 0 10px 25px rgba(37, 211, 102, 0.35);
+    transition: var(--transition-smooth);
+    animation: whatsappPulse 2s infinite; /* Pulsar constante */
+}
+
+.whatsapp-float-btn:hover {
+    transform: scale(1.1);
+    background-color: #20ba56;
+    box-shadow: 0 12px 30px rgba(37, 211, 102, 0.45);
+}
+
+.whatsapp-icon {
+    width: 32px;
+    height: 32px;
+}
+
+/* Balão Tooltip do WhatsApp */
+.whatsapp-tooltip {
+    position: absolute;
+    bottom: 75px;
+    right: 0;
+    width: 310px;
+    background-color: var(--bg-card);
+    border: 1px solid var(--accent-chumbo);
+    border-radius: var(--border-radius-md);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8);
+    padding: 1.35rem;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
+                transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
+                visibility 0.5s;
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+}
+
+/* Quando o balão for exibido pelo JS */
+.whatsapp-tooltip.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.tooltip-close {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    font-size: 1.25rem;
+    color: var(--text-muted);
+}
+
+.tooltip-close:hover {
+    color: var(--text-primary);
+}
+
+/* Cabeçalho do balão */
+.tooltip-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.85rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 0.65rem;
+}
+
+.tooltip-avatar-wrapper {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+}
+
+.tooltip-avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1.5px solid var(--accent-gold);
+}
+
+.online-indicator {
+    position: absolute;
+    bottom: 1px;
+    right: 1px;
+    width: 9px;
+    height: 9px;
+    background-color: #25d366;
+    border-radius: 50%;
+    border: 1.5px solid var(--bg-card);
+}
+
+.tooltip-meta {
+    display: flex;
+    flex-direction: column;
+}
+
+.tooltip-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.tooltip-status {
+    font-size: 0.68rem;
+    color: var(--text-secondary);
+}
+
+/* [REGRA APLICADA] Corpo do balão de suporte justificado */
+.tooltip-body {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-bottom: 1.1rem;
+    text-align: justify; /* Justificado */
+}
+
+/* Botão do balão de conversa com Shimmer verde */
+.tooltip-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #25d366;
+    color: white;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 0.7rem;
+    border-radius: var(--border-radius-sm);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    transition: var(--transition-smooth);
+}
+
+.tooltip-btn:hover {
+    background-color: #20ba56;
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE (MEDIA QUERIES)
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+    .container {
+        padding: 0 2rem;
+    }
+    
+    .hero-container {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+    
+    .hero-visual {
+        display: none;
+    }
+    
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .scenarios-layout {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+    
+    .scenarios-intro {
+        position: relative;
+        top: 0;
+    }
+    
+    .about-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+    
+    .about-image-wrapper {
+        max-width: 500px;
+        margin: 0 auto;
+    }
+    
+    .advantages-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .footer-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    :root {
+        --header-height: 70px;
+    }
+    
+    .section-padding {
+        padding: 5rem 0;
+    }
+    
+    .hero-title {
+        font-size: 2.4rem;
+    }
+    
+    .hero-text-highlight {
+        font-size: 1.05rem;
+    }
+    
+    .cta-box {
+        padding: 3rem 2rem;
+    }
+    
+    .cta-title {
+        font-size: 1.9rem;
+    }
+    
+    .nav-toggle {
+        display: flex;
+    }
+    
+    .nav-menu {
+        position: fixed;
+        top: var(--header-height);
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - var(--header-height));
+        background-color: var(--bg-primary);
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        padding-top: 3rem;
+        gap: 2.5rem;
+        transition: left 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+        border-top: 1px solid var(--accent-chumbo);
+    }
+    
+    .nav-menu.active {
+        left: 0;
+    }
+    
+    .nav-link {
+        font-size: 1.15rem;
+    }
+    
+    .btn-menu {
+        font-size: 1.1rem;
+        padding: 0.8rem 2rem;
+        margin-top: 1rem;
+    }
+    
+    .nav-toggle.active .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+    
+    .nav-toggle.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+    
+    .nav-toggle.active .bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+    
+    body.no-scroll {
+        overflow: hidden;
+    }
+}
+
+@media (max-width: 480px) {
+    .services-grid,
+    .advantages-grid,
+    .footer-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .hero-actions {
+        flex-direction: column;
+        padding-right: 1.35rem;
+    }
+    
+    .btn {
+        width: 100%;
+    }
+    
+    .section-title {
+        font-size: 1.8rem;
+    }
+    
+    .faq-question {
+        padding: 1.3rem 1.5rem;
+        font-size: 0.95rem;
+    }
+    
+    .faq-answer-text {
+        padding: 0 1.5rem 1.3rem 1.5rem;
+    }
+    
+    .whatsapp-tooltip {
+        width: calc(100vw - 3rem);
+        right: -1rem;
+    }
+}
