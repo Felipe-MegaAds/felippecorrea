@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initFaqAccordion();
     initWhatsappTooltip();
     initScrollReveal();
+    initGtmTracking(); // Inicializa o monitoramento de cliques para o GTM
 });
 
 /**
@@ -160,5 +161,40 @@ function initScrollReveal() {
     revealElements.forEach(element => {
         observer.observe(element);
     });
+}
+
+/**
+ * Lógica para rastreamento de eventos personalizados do GTM via dataLayer
+ * Esta função captura cliques nos botões flutuantes do WhatsApp e os envia ao dataLayer do Google Tag Manager.
+ */
+function initGtmTracking() {
+    // Obtém o botão flutuante principal do WhatsApp
+    const floatBtn = document.getElementById('gtm-whatsapp-float');
+    // Obtém o botão de ação dentro do balão (tooltip)
+    const tooltipBtn = document.getElementById('gtm-whatsapp-tooltip');
+
+    // Se o botão flutuante principal existir, adiciona o escutador de evento de clique
+    if (floatBtn) {
+        floatBtn.addEventListener('click', () => {
+            // Garante que o dataLayer existe na janela e envia o evento de clique estruturado
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+                'event': 'whatsapp_click',
+                'button_location': 'floating_button'
+            });
+        });
+    }
+
+    // Se o botão do balão existir, adiciona o escutador de evento de clique
+    if (tooltipBtn) {
+        tooltipBtn.addEventListener('click', () => {
+            // Garante que o dataLayer existe na janela e envia o evento de clique estruturado
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+                'event': 'whatsapp_click',
+                'button_location': 'floating_tooltip'
+            });
+        });
+    }
 }
 

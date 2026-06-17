@@ -1687,3 +1687,15 @@ img {
         right: -1rem;
     }
 }
+
+/* 
+   Comentário explicativo:
+   Esta regra impede que os elementos SVG e seus caminhos internos interceptem os eventos de clique do mouse.
+   Isso garante que o clique se propague diretamente para a tag pai <a> (link), permitindo que o Google Tag Manager (GTM)
+   identifique corretamente a classe e a URL do link clicado, em vez de capturar o elemento gráfico do ícone.
+*/
+a svg, 
+a svg * {
+    pointer-events: none;
+}
+
